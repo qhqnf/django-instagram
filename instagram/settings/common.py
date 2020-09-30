@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMINS = [
+    ("yhc", "yhc@naver.com"),
+]
 
 # Application definition
 
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     # Third party apps
     "debug_toolbar",
     "bootstrap4",
+    "django_pydenticon",
     # Local apps
     "accounts",
 ]
