@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django_pydenticon",
     # Local apps
     "accounts",
+    "extagram",
 ]
 
 MIDDLEWARE = [
