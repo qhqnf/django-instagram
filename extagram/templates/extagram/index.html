@@ -1,13 +1,19 @@
-{% extends "layout.html" %}
+{% extends "extagram/layout.html" %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                Instagram
-                <hr/>
                 <a href="{% url 'extagram:post_new' %}" class="btn btn-primary">새 포스트 쓰기</a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-8">
+                Timeline
+            </div>
+            <div class="col-sm-4">
+                {% include "extagram/timeline_sidebar.html" %}
+            </div>
+        </div
     </div>
 {% endblock %}
