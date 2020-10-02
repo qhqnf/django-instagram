@@ -18,10 +18,10 @@ class SignupForm(UserCreationForm):
         fields = ["username", "email", "first_name", "last_name"]
 
     def clean_email(self):
-        email = self.clenaed_data.get("email")
+        email = self.cleaned_data.get("email")
         if email:
             qs = User.objects.filter(email=email)
-            if qs.exist():
+            if qs.exists():
                 raise forms.ValidationError("이미 존재하는 이메일입니다.")
         return email
 
