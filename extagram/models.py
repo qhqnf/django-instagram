@@ -13,7 +13,7 @@ class Post(models.Model):
     location = models.CharField(max_length=100)
 
     def get_absolute_url(self):
-        return reverse("", kwargs={"pk": self.pk})
+        return reverse("extagram:post_detail", args=[self.pk])
 
     def __str__(self):
         return self.caption
