@@ -15,7 +15,7 @@ def index(request):
     post_list = (
         Post.objects.all()
         .filter(Q(author__in=request.user.following_set.all()) | Q(author=request.user))
-        .filter(created_at__lte=time_since)
+        .filter(created_at__gte=time_since)
     )
 
     suggested_user_list = (
@@ -69,3 +69,20 @@ def user_page(request, username):
         {"page_user": page_user, "post_list": post_list, "is_follow": is_follow},
     )
 
+
+@login_required
+def post_like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.like_user_set.add(request.user)
+    messages.success(request, "포스팅을 좋아합니다.")
+    redirect_url = request.META.get("HTTP_REFERER", "root")
+    return redirect(redirect_url)
+
+
+@login_required
+def post_unlike(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.like_user_set.remove(request.user)
+    messages.success(request, "좋아요를 취소했습니다.")
+    redirect_url = request.META.get("HTTP_REFERER", "root")
+    return redirect(redirect_url)

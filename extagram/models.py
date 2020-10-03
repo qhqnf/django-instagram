@@ -14,11 +14,18 @@ class BaseModel(models.Model):
 
 class Post(BaseModel):
 
-    author = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="my_post_set",
+    )
     photo = models.ImageField(upload_to="extagram/%Y/%m/%d")
     caption = models.CharField(max_length=500)
     tag_set = models.ManyToManyField("Tag", blank=True)
     location = models.CharField(max_length=100)
+    like_user_set = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="like_post_set"
+    )
 
     def get_absolute_url(self):
         return reverse("extagram:post_detail", args=[self.pk])
@@ -33,6 +40,12 @@ class Post(BaseModel):
             tag, _ = Tag.objects.get_or_create(name=tag_name)
             tag_list.append(tag)
         return tag_list
+
+    def is_like_user(self, user):
+        return self.like_user_set.all().filter(pk=user.pk).exists()
+
+    class Meta:
+        ordering = ["-id"]
 
 
 class Tag(models.Model):
