@@ -1,11 +1,11 @@
 <div class="d-flex mb-1">
     <div class="mr-3">
-        <img src="{{ friend_user.avatar_url}}" style="width:32px; height:32px;" class="rounded-circle" />
+        <img src="{{ suggested_user.avatar_url}}" style="width:32px; height:32px;" class="rounded-circle" />
     </div>
     <div>
-        {{ friend_user.username }}
+        {{ suggested_user.username }}
     </div>
     <div class="ml-auto">
-        <button>Follow</button>
+        <a href="{% url 'user_follow' username=suggested_user.username %}" >Follow</a>
     </div>
 </div>

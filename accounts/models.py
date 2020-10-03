@@ -13,6 +13,9 @@ class User(AbstractUser):
         MALE = "Male", "Male"
         FEMALE = "Female", "Female"
 
+    follower_set = models.ManyToManyField("self", blank=True)
+    following_set = models.ManyToManyField("self", blank=True)
+
     website_url = models.URLField(blank=True)
     bio = models.TextField(blank=True)
     phone_number = models.CharField(
@@ -38,8 +41,10 @@ class User(AbstractUser):
         else:
             return resolve_url("pydenticon_image", self.username)
 
+    """
     def send_welcome_email(self):
         title = render_to_string("accounts/welcome_email_title.txt", {"user": self,})
         content = render_to_string("accounts/welcome_email_content.txt", {"user": self})
         sender = "welcome@instagram.com"
         send_mail(title, content, sender, [self.email], fail_silently=False)
+    """
