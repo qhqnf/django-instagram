@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from .models import Post, Tag
 
 
@@ -86,3 +86,19 @@ def post_unlike(request, pk):
     messages.success(request, "좋아요를 취소했습니다.")
     redirect_url = request.META.get("HTTP_REFERER", "root")
     return redirect(redirect_url)
+
+
+@login_required
+def comment_new(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post, comment.author = post, request.user
+            comment.save()
+            return redirect(comment.post)
+    else:
+        form = CommentForm()
+    return render(request, "extagram/comment_form.html", {"form": form})
+
