@@ -12,6 +12,11 @@
                 <a href="{% url 'profile_edit' %}" class="btn btn-secondary" >
                     Edit Profile
                 </a>
+                {% if is_follow %}
+                    <a href="{% url 'user_unfollow' username=page_user.username %}" >Unfollow</a>
+                {% else %}
+                    <a href="{% url 'user_follow' username=page_user.username %}" >Follow</a>
+                {% endif %}
                 <hr/>
                 {{ post_list.count }} posts, 0 followers, 0 follwing
                 <hr/>
