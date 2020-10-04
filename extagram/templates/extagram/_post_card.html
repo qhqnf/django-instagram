@@ -1,5 +1,4 @@
-{% load thumbnail %}
-{% load humanize extagram_tags %}
+{% load bootstrap4 humanize extagram_tags thumbnail %}
 
 <div class="card">
     <div class="card-header">
@@ -48,6 +47,10 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="{% url 'extagram:comment_new' post.pk %}"> 댓글 쓰기 </a>
+        <form id="post-{{ post.pk }}-comment-form" action="{% url 'extagram:comment_new' post.pk %}" method="POST" >
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input type="submit" value="댓글 쓰기" class="btn btn-primary btn-block" />
+        </form>
     </div>
 </div>
